@@ -1,0 +1,75 @@
+/* Background with image */
+.hero {
+  background-image: url('../assets/images/mie_portrait.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Backdrop blur */
+.hero-blur {
+  backdrop-filter: blur(4px); /* equivalent to Tailwind's backdrop-blur-sm */
+}
+
+/* Navbar */
+.navbar {
+  padding: 0 50px;
+  height: 50px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.logo a {
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-links a {
+  margin-left: 12px;
+  text-decoration: none;
+  color: white;
+}
+
+/* Search section */
+.search-food {
+  height: 400px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.search-box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.search-box h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Input wrapper */
+.input-wrapper {
+  padding: 0 30px;
+  background-color: white;
+  border-radius: 12px;
+  width: 400px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  border: none;
+  outline: none;
+  color: black;
+}
