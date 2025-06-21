@@ -1,37 +1,67 @@
 <?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Akun Baru</title>
-    <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
-        .signup-container { background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input[type="text"], input[type="password"], select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
-        button:hover { background-color: #218838; }
-        .message { color: red; margin-bottom: 10px; }
-    </style>
-</head>
+
+<?php require '../components/head.php' ?>
+
 <body>
-    <div class="signup-container">
-        <h2>Daftar Akun Baru</h2>
-        <?php
-        if (isset($_SESSION['error_message'])) {
-            echo '<p class="message">' . $_SESSION['error_message'] . '</p>';
-            unset($_SESSION['error_message']); // Hapus pesan setelah ditampilkan
-        }
-        ?>
-        <form action="../auth/sign-up.php" method="POST">
-            <input type="hidden" name="action" value="signup">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" required><br><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required><br><br>
-            <button type="submit">Daftar</button>
-        </form>
-        <p>Sudah punya akun? <a href="sign-in.php">Login di sini</a>.</p>
+    <!-- Header Section -->
+    <div class="relative">
+        <div class="relative bg-cover bg-center h-[300px]" style="background-image: url('../assets/images/mie_portrait.jpg')">
+            <!-- Backdrop Blur Overlay -->
+            <div class="backdrop-blur-sm w-full h-full">
+                <!-- Navbar -->
+                <nav class="flex justify-between items-center h-14 px-12 text-white">
+                    <div class="text-lg font-semibold">
+                        <a href="/">PesanMakan</a>
+                    </div>
+                    <div class="space-x-4">
+                        <a href="index.php?page=about" class="hover:underline">About</a>
+                        <a href="index.php?page=contact" class="hover:underline">Contact</a>
+                        <?php echo isset($_SESSION['username'])
+                            ? '<a href="http://uas.test/pages/dashboard.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500">' . htmlspecialchars($_SESSION['username']) . '</a>'
+                            : '<a href="http://uas.test/pages/sign-in.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500">Login</a>';
+                        ?>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Login Card Floating Overlap -->
+        <div class="flex justify-center -mt-24 z-10 relative">
+            <div class="h-[500px] bg-white rounded-lg shadow-lg w-[350px] p-6">
+                <h2 class="text-xl font-bold text-center mb-4">Sign Up</h2>
+
+                <?php
+                if (isset($_SESSION['error_message'])) {
+                    echo '<p class="text-red-500 text-sm mb-2">' . $_SESSION['error_message'] . '</p>';
+                    unset($_SESSION['error_message']);
+                }
+                if (isset($_SESSION['success_message'])) {
+                    echo '<p class="text-green-500 text-sm mb-2">' . $_SESSION['success_message'] . '</p>';
+                    unset($_SESSION['success_message']);
+                }
+                ?>
+
+                <form action="../auth/sign-up.php" method="POST" class="flex flex-col justify-between space-y-5">
+                    <div class="space-y-5">
+                        <input type="hidden" name="action" value="login">
+                        <div>
+                            <label for="username" class="block text-sm font-medium">Username</label>
+                            <input type="text" id="username" name="username" required class="w-full border border-black border-3 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium">Password</label>
+                            <input type="password" id="password" name="password" required class="w-full border border-black border-3 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-black text-white font-semibold mt-8 py-3 rounded-full">Sign Up</button>
+                </form>
+
+                <p class="text-sm text-center mt-4">Sudah punya akun? <a href="sign-in.php" class="text-blue-600 hover:underline">Coba login</a>.</p>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>

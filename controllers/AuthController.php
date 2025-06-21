@@ -11,7 +11,7 @@ class AuthController {
     public function login($username, $password) {
         if (empty($username) || empty($password)) {
             $_SESSION['error_message'] = "Username dan password harus diisi.";
-            header("Location: ../pages/login.php");
+            header("Location: ../pages/sign-in.php");
             exit();
         }
 
@@ -33,7 +33,7 @@ class AuthController {
             if ($user['role'] === 'admin') {
                 header("Location: http://uas.test/pages/dashboard.php");
             } else {
-                header("Location: http://uas.test/pages/home.php");
+                header("Location: http://uas.test");
             }
             exit();
         } else {

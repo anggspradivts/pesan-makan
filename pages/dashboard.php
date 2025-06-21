@@ -1,68 +1,21 @@
 <?php
+// pages/dashboard.php
 session_start();
-// Pastikan user sudah login dan adalah admin
-if (isset($_SESSION['username'])) {
-    if ($_SESSION['role'] !== 'admin') {
-        header("Location: http://uas.test/pages/profile.php");
-        exit();
-    }
-} else {
-    header("Location: http://uas.test/pages/login.php");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
     exit();
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+$page = $_GET['page'] ?? 'index';
+$file = __DIR__ . "/dashboard/$page.php";
 
-<body class="bg-gray-100 font-sans">
-
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg">
-            <div class="p-6 font-bold text-xl text-blue-600">
-                Admin Panel
-            </div>
-            <nav class="mt-8 space-y-2">
-                <a href="#" class="block px-6 py-2 hover:bg-gray-100">Dashboard</a>
-                <a href="#" class="block px-6 py-2 hover:bg-gray-100">Users</a>
-                <a href="#" class="block px-6 py-2 hover:bg-gray-100">Orders</a>
-                <a href="#" class="block px-6 py-2 hover:bg-gray-100">Settings</a>
-                <a href="../auth/logout.php" class="block px-6 py-2 text-red-600 hover:bg-red-100">Logout</a>
-            </nav>
-        </aside>
-
-        <!-- Main content -->
-        <main class="flex-1 p-8">
-            <!-- Top bar -->
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-semibold">Dashboard</h1>
-                <div class="text-gray-600">Welcome, <span class="font-semibold text-black"><?php echo htmlspecialchars($_SESSION['username']) ?></span></div>
-            </div>
-
-            <!-- Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2">Total Users</h2>
-                    <p class="text-2xl">123</p>
-                </div>
-                <div class="bg-white p-6 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2">Orders Today</h2>
-                    <p class="text-2xl">34</p>
-                </div>
-                <div class="bg-white p-6 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2">Revenue</h2>
-                    <p class="text-2xl">$1,200</p>
-                </div>
-            </div>
-        </main>
-    </div>
-</body>
-
-</html>
+if (file_exists($file)) {
+    include '../components/head.php';
+    echo "<div class='flex h-screen bg-gray-100 font-sans'>";
+    include 'dashboard/partials/sidebar.php';
+    include $file;
+    echo "</div>";
+    // include 'dashboard/partials/footer.php';
+} else {
+    echo "Page not found.";
+}
