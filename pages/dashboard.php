@@ -11,7 +11,7 @@ $file = __DIR__ . "/dashboard/$page.php";
 
 if (file_exists($file)) {
     include '../components/head.php';
-    echo "<div class='flex h-screen bg-gray-100 font-sans'>";
+    echo "<div class='flex bg-gray-100 font-sans'>";
     include 'dashboard/partials/sidebar.php';
     include $file;
     echo "</div>";
