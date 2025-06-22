@@ -7,6 +7,6 @@
     <a href="dashboard.php?page=menu" class="block px-6 py-2 hover:bg-gray-100">Menu</a>
     <a href="dashboard.php?page=orders" class="block px-6 py-2 hover:bg-gray-100">Orders</a>
     <a href="/" class="fa-solid fa-house block px-6 py-2" title="View Site"></a>
-    <a href="../auth/logout.php" class="block px-6 py-2 text-red-600 hover:bg-red-100">Logout</a>
+    <a href="../process/auth/logout.php" class="block px-6 py-2 text-red-600 hover:bg-red-100">Logout</a>
   </nav>
 </aside>

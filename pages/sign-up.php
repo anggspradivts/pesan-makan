@@ -43,7 +43,7 @@
                 }
                 ?>
 
-                <form action="../auth/sign-up.php" method="POST" class="flex flex-col justify-between space-y-5">
+                <form action="../process/auth/sign-up.php" method="POST" class="flex flex-col justify-between space-y-5">
                     <div class="space-y-5">
                         <input type="hidden" name="action" value="login">
                         <div>

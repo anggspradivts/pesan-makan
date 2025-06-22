@@ -43,7 +43,7 @@
         }
         ?>
 
-        <form action="../auth/sign-in.php" method="POST" class="flex flex-col justify-between space-y-5">
+        <form action="../process/auth/sign-in.php" method="POST" class="flex flex-col justify-between space-y-5">
           <div class="space-y-5">
             <input type="hidden" name="action" value="login">
             <div>
@@ -57,7 +57,6 @@
           </div>
           <button type="submit" class="w-full bg-black text-white font-semibold mt-8 py-3 rounded-full">Login</button>
         </form>
-
         <p class="text-sm text-center mt-4">Belum punya akun? <a href="sign-up.php" class="text-blue-600 hover:underline">Daftar di sini</a>.</p>
       </div>
     </div>

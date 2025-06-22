@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../controllers/MenuController.php';
-require_once __DIR__ . '/../..//database.php';
+require_once __DIR__ . '/../../database.php';
 
 
 if (!$_SESSION['username'] || $_SESSION['role'] !== 'admin') {
