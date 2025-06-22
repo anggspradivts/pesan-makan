@@ -1,13 +1,17 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "pesan_makan";
-// $charset = 'utf8mb4';
+$servername = "localhost"; // or your server address
+$username = "root";        // your database username
+$password = "";            // your database password (often empty in Laragon)
+$dbname = "pesan_makan";        // your database name
 
-$conn = mysqli_connect($host, $user, $pass, $db);
+// Create connection using the Object-Oriented style
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+// Check connection
+if ($conn->connect_error) {
+  // Stop the script and show an error if the connection fails
+  die("Connection failed: " . $conn->connect_error);
 }
-?>
+
+// Optional: Set character set to utf8mb4 for full emoji and character support
+$conn->set_charset("utf8mb4");
