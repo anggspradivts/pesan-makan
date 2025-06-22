@@ -1,12 +1,8 @@
 <?php
-// 1. Muat file yang diperlukan
-// (Asumsi $conn sudah ada dari file layout utama)
 require_once __DIR__ . '/../../controllers/MenuController.php';
 
-// 2. Buat object dari MenuController
 $menuController = new MenuController($conn);
 
-// 3. Panggil method getMenu() untuk mengambil data makanan dan minuman
 $makananList = $menuController->getMenu('makanan');
 $minumanList = $menuController->getMenu('minuman');
 ?>
@@ -25,13 +21,11 @@ $minumanList = $menuController->getMenu('minuman');
     <h1 class="text-xl font-semibold">Makanan</h1>
     <div class="list-menu-container grid grid-cols-3 gap-2">
       <?php
-      // 4. Periksa apakah array $makananList tidak kosong
       if (!empty($makananList)) {
-        // 5. Gunakan foreach untuk "memetakan" setiap item ke kartu HTML
         foreach ($makananList as $makanan) {
       ?>
           <!-- Template Kartu Menu -->
-          <div class="food-card flex flex-col h-[320px] bg-white rounded-lg border border-slate-300 hover:shadow overflow-hidden">
+          <div class="food-card flex flex-col h-[320px] bg-white rounded-lg border border-slate-300 hover:shadow overflow-hidden transition">
             <div class="img-container w-full h-1/2">
               <img src="/assets/images/mie_portrait.jpg" alt="<?php echo htmlspecialchars($makanan['nama']); ?>" class="object-cover w-full h-full">
             </div>
@@ -59,13 +53,11 @@ $minumanList = $menuController->getMenu('minuman');
     <div class="list-menu-container grid grid-cols-3 gap-2">
 
       <?php
-      // 4. Periksa apakah array $makananList tidak kosong
       if (!empty($minumanList)) {
-        // 5. Gunakan foreach untuk "memetakan" setiap item ke kartu HTML
         foreach ($minumanList as $minuman) {
       ?>
           <!-- Template Kartu Menu -->
-          <div class="food-card flex flex-col h-[320px] bg-white rounded-lg border border-slate-300 hover:shadow overflow-hidden">
+          <div class="food-card flex flex-col h-[320px] bg-white rounded-lg border border-slate-300 hover:shadow overflow-hidden transition">
             <div class="img-container w-full h-1/2 overflow-hidden">
               <img src="/assets/images/mie_portrait.jpg" alt="<?php echo htmlspecialchars($minuman['nama']); ?>" class="object-cover w-full h-full">
             </div>

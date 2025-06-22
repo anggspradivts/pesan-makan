@@ -101,20 +101,21 @@ class MenuController
    * @param array  $gambar_file Data dari $_FILES['gambar'].
    * @return bool True jika berhasil, false jika gagal.
    */
-  public function addMenu($nama, $deskripsi, $harga, $kategori, $gambar_file)
+  public function addMenu($nama, $deskripsi, $harga, $kategori)
   {
-    $gambar_nama = $this->handleImageUpload($gambar_file);
-    if ($gambar_nama === false) {
-      return false;
-    }
+    // Used for handling image upload
+    // $gambar_nama = $this->handleImageUpload($gambar_file);
+    // if ($gambar_nama === false) {
+    //   return false;
+    // }
 
-    $sql = "INSERT INTO menu (nama, deskripsi, harga, kategori, gambar) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO menu (nama, deskripsi, harga, kategori) VALUES (?, ?, ?, ?)";
     $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("ssiss", $nama, $deskripsi, $harga, $kategori, $gambar_nama);
+    $stmt->bind_param("ssis", $nama, $deskripsi, $harga, $kategori);
 
     if ($stmt->execute()) {
       $stmt->close();
-      return true;
+      header('Location: http://uas.test/pages/dashboard.php?page=menu');
     } else {
       $_SESSION['error_message'] = "Gagal menambahkan menu ke database: " . $stmt->error;
       $stmt->close();

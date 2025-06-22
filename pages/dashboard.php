@@ -19,7 +19,6 @@ if (file_exists($file)) {
         include $file;
         echo "</div>";
     echo "</div>";
-    // include 'dashboard/partials/footer.php';
 } else {
     echo "Page not found.";
 }
