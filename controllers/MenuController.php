@@ -175,16 +175,16 @@ class MenuController
   public function deleteMenu($id)
   {
     // 1. Ambil nama file gambar dari database sebelum record dihapus
-    $sql_select = "SELECT gambar FROM menu WHERE id = ?";
-    $stmt_select = $this->conn->prepare($sql_select);
-    $stmt_select->bind_param("i", $id);
-    $stmt_select->execute();
-    $result = $stmt_select->get_result();
-    $gambar_nama = null;
-    if ($row = $result->fetch_assoc()) {
-      $gambar_nama = $row['gambar'];
-    }
-    $stmt_select->close();
+    // $sql_select = "SELECT gambar FROM menu WHERE id = ?";
+    // $stmt_select = $this->conn->prepare($sql_select);
+    // $stmt_select->bind_param("i", $id);
+    // $stmt_select->execute();
+    // $result = $stmt_select->get_result();
+    // $gambar_nama = null;
+    // if ($row = $result->fetch_assoc()) {
+    //   $gambar_nama = $row['gambar'];
+    // }
+    // $stmt_select->close();
 
     // 2. Hapus record dari database
     $sql_delete = "DELETE FROM menu WHERE id = ?";
@@ -194,13 +194,13 @@ class MenuController
     if ($stmt_delete->execute()) {
       $stmt_delete->close();
       // 3. Jika record berhasil dihapus, hapus file gambarnya
-      if (!empty($gambar_nama)) {
-        $image_path = $_SERVER['DOCUMENT_ROOT'] . '/uas.test/images/' . $gambar_nama;
-        if (file_exists($image_path)) {
-          unlink($image_path);
-        }
-      }
-      return true;
+      // if (!empty($gambar_nama)) {
+      //   $image_path = $_SERVER['DOCUMENT_ROOT'] . '/uas.test/images/' . $gambar_nama;
+      //   if (file_exists($image_path)) {
+      //     unlink($image_path);
+      //   }
+      // }
+      header('Location: http://uas.test/pages/dashboard.php?page=menu');
     } else {
       $_SESSION['error_message'] = "Gagal menghapus menu: " . $stmt_delete->error;
       $stmt_delete->close();

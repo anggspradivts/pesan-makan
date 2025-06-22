@@ -1,18 +1,20 @@
 <?php
-  session_start();
-  require_once __DIR__. '/../../controllers/MenuController.php';
-  require_once __DIR__. '/../..//database.php';
+session_start();
+require_once __DIR__ . '/../../controllers/MenuController.php';
+require_once __DIR__ . '/../..//database.php';
 
-  
-  if(!$_SESSION['username'] || $_SESSION['role'] !== 'admin') {
-    header("Location: /pages/sign-in.php");
-    exit;
-  }
-  
-  $namaMenu = $_POST['nama-menu'];
-  $hargaMenu = $_POST['harga-menu'];
-  $kategoriMenu = $_POST['kategori-menu'];
-  $deskripsiMenu = $_POST['deskripsi-menu'];
+
+if (!$_SESSION['username'] || $_SESSION['role'] !== 'admin') {
+  header("Location: http://uas.test/pages/sign-in.php");
+  exit;
+}
+
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+  $idMenu = (int) $_GET['id'];
+  echo $idMenu;
   $menu = new MenuController($conn);
-  $menu->addMenu($namaMenu, $deskripsiMenu, $hargaMenu, $kategoriMenu);
-?>
+  $menu->deleteMenu($idMenu);
+} else {
+  header("Location: ../dashboard.php?page=menu&error=invalid_id");
+  exit;
+}

@@ -7,7 +7,7 @@ $makananList = $menuController->getMenu('makanan');
 $minumanList = $menuController->getMenu('minuman');
 ?>
 
-<body class="">
+<body>
   <main class="flex-1 p-8 space-y-5">
     <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold ">Manage Menu</h1>
@@ -36,7 +36,7 @@ $minumanList = $menuController->getMenu('minuman');
               </div>
               <div class="flex w-full space-x-3 items-center mt-2">
                 <a href="dashboard.php?page=edit-menu&id=<?php echo $makanan['id']; ?>" class="w-1/2 text-center p-2 bg-white border border-gray-400 rounded hover:bg-gray-100">Edit <i class="fa-solid fa-pencil"></i></a>
-                <a href="../proses/hapus_menu.php?id=<?php echo $makanan['id']; ?>" onclick="return confirm('Anda yakin ingin menghapus menu ini?');" class="w-1/2 text-center p-2 bg-red-500 text-white rounded hover:bg-red-600">Hapus <i class="fa-solid fa-trash"></i></a>
+                <a href="../process/menu/delete.php?id=<?php echo $makanan['id']; ?>" onclick="return confirm('Anda yakin ingin menghapus menu ini?');" class="w-1/2 text-center p-2 bg-red-500 text-white rounded hover:bg-red-600">Hapus <i class="fa-solid fa-trash"></i></a>
               </div>
             </div>
           </div>
