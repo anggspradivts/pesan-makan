@@ -9,63 +9,6 @@ class MenuController
   {
     $this->conn = $conn;
   }
-  /**
-   * Menangani upload file gambar.
-   * @param array $gambar_file Data dari $_FILES['gambar'].
-   * @return string|null|false Mengembalikan nama file baru jika berhasil, 
-   * null jika tidak ada file di-upload, 
-   * false jika terjadi error.
-   */
-  private function handleImageUpload($gambar_file)
-  {
-    // Cek jika tidak ada file yang di-upload
-    if (!isset($gambar_file) || $gambar_file['error'] == UPLOAD_ERR_NO_FILE) {
-      return null;
-    }
-
-    // Cek error upload lainnya
-    if ($gambar_file['error'] != UPLOAD_ERR_OK) {
-      $_SESSION['error_message'] = "Terjadi error saat upload file.";
-      return false;
-    }
-
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/uas.test/images/';
-    if (!is_dir($target_dir)) {
-      mkdir($target_dir, 0777, true);
-    }
-
-    $imageFileType = strtolower(pathinfo($gambar_file["name"], PATHINFO_EXTENSION));
-
-    // Buat nama file yang unik untuk menghindari penimpaan file
-    $new_filename = uniqid('menu_', true) . '.' . $imageFileType;
-    $target_file = $target_dir . $new_filename;
-
-    // Validasi dasar
-    $check = getimagesize($gambar_file["tmp_name"]);
-    if ($check === false) {
-      $_SESSION['error_message'] = "File yang di-upload bukan gambar.";
-      return false;
-    }
-
-    if ($gambar_file["size"] > 2000000) { // Batas 2MB
-      $_SESSION['error_message'] = "Ukuran file terlalu besar (maks 2MB).";
-      return false;
-    }
-
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-      $_SESSION['error_message'] = "Hanya format JPG, JPEG, & PNG yang diizinkan.";
-      return false;
-    }
-
-    // Pindahkan file ke direktori tujuan
-    if (move_uploaded_file($gambar_file["tmp_name"], $target_file)) {
-      return $new_filename; // Berhasil, kembalikan nama file baru
-    } else {
-      $_SESSION['error_message'] = "Gagal memindahkan file yang di-upload.";
-      return false;
-    }
-  }
-
 
   public function getMenu($kategori)
   {
@@ -92,6 +35,22 @@ class MenuController
     return $data;
   }
 
+  public function getMenuDetail($idMenu) {
+    $sql = "SELECT * FROM menu WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("s", $idMenu);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $menu = $result->fetch_assoc();
+
+    if ($menu) {
+      $stmt->close();
+      return $menu;
+    } else {
+      return null;
+    }
+  }
+
   /**
    * Menambahkan item menu baru ke database.
    * @param string $nama
@@ -103,12 +62,6 @@ class MenuController
    */
   public function addMenu($nama, $deskripsi, $harga, $kategori)
   {
-    // Used for handling image upload
-    // $gambar_nama = $this->handleImageUpload($gambar_file);
-    // if ($gambar_nama === false) {
-    //   return false;
-    // }
-
     $sql = "INSERT INTO menu (nama, deskripsi, harga, kategori) VALUES (?, ?, ?, ?)";
     $stmt = $this->conn->prepare($sql);
     $stmt->bind_param("ssis", $nama, $deskripsi, $harga, $kategori);
@@ -134,32 +87,15 @@ class MenuController
    * @param string $old_gambar_name Nama file gambar lama untuk dihapus jika ada yg baru.
    * @return bool True jika berhasil, false jika gagal.
    */
-  public function editMenu($id, $nama, $deskripsi, $harga, $kategori, $new_gambar_file, $old_gambar_name)
+  public function editMenu($nama, $deskripsi, $harga, $kategori, $id)
   {
-    $gambar_nama_baru = $old_gambar_name;
-
-    if (isset($new_gambar_file) && $new_gambar_file['error'] == UPLOAD_ERR_OK) {
-      $uploaded_filename = $this->handleImageUpload($new_gambar_file);
-      if ($uploaded_filename !== false) {
-        $gambar_nama_baru = $uploaded_filename;
-        if (!empty($old_gambar_name)) {
-          $old_image_path = $_SERVER['DOCUMENT_ROOT'] . '/uas.test/images/' . $old_gambar_name;
-          if (file_exists($old_image_path)) {
-            unlink($old_image_path);
-          }
-        }
-      } else {
-        return false;
-      }
-    }
-
-    $sql = "UPDATE menu SET nama = ?, deskripsi = ?, harga = ?, kategori = ?, gambar = ? WHERE id = ?";
+    $sql = "UPDATE menu SET nama = ?, deskripsi = ?, harga = ?, kategori = ? WHERE id = ?";
     $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("ssissi", $nama, $deskripsi, $harga, $kategori, $gambar_nama_baru, $id);
+    $stmt->bind_param("ssisi", $nama, $deskripsi, $harga, $kategori, $id);
 
     if ($stmt->execute()) {
       $stmt->close();
-      return true;
+      header('Location: http://uas.test/pages/dashboard.php?page=menu');
     } else {
       $_SESSION['error_message'] = "Gagal mengupdate menu: " . $stmt->error;
       $stmt->close();
