@@ -2,7 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php require '../components/head.php' ?>
+<?php 
+require '../components/head.php'; 
+if (isset($_SESSION['user']) && $_SESSION['user']['nama']) {
+  header("Location: http://uas.test/pages/profile.php");
+};
+?>
 
 <body class="bg-gray-100">
   <!-- Header Section -->
@@ -18,8 +23,8 @@
           <div class="space-x-4">
             <a href="index.php?page=about" class="hover:underline">About</a>
             <a href="index.php?page=contact" class="hover:underline">Contact</a>
-            <?php echo isset($_SESSION['username'])
-              ? '<a href="http://uas.test/pages/dashboard.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500">' . htmlspecialchars($_SESSION['username']) . '</a>'
+            <?php echo isset($_SESSION['user']['nama'])
+              ? '<a href="http://uas.test/pages/dashboard.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500">' . htmlspecialchars($_SESSION['nama']) . '</a>'
               : '<a href="http://uas.test/pages/sign-in.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500">Login</a>';
             ?>
           </div>
@@ -34,11 +39,11 @@
 
         <?php
         if (isset($_SESSION['error_message'])) {
-          echo '<p class="text-red-500 text-sm mb-2">' . $_SESSION['error_message'] . '</p>';
+          echo '<p class="text-center text-red-500 text-sm mb-2">' . $_SESSION['error_message'] . '</p>';
           unset($_SESSION['error_message']);
         }
         if (isset($_SESSION['success_message'])) {
-          echo '<p class="text-green-500 text-sm mb-2">' . $_SESSION['success_message'] . '</p>';
+          echo '<p class="text-center text-green-500 text-sm mb-2">' . $_SESSION['success_message'] . '</p>';
           unset($_SESSION['success_message']);
         }
         ?>

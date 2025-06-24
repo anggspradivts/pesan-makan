@@ -3,8 +3,8 @@
 session_start();
 require_once '../database.php';
 
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php");
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+    header("Location: http://uas.test/pages/profile.php");
     exit();
 }
 

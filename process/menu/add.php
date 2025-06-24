@@ -4,7 +4,7 @@
   require_once __DIR__. '/../..//database.php';
 
   
-  if(!$_SESSION['username'] || $_SESSION['role'] !== 'admin') {
+  if(!$_SESSION['user'] || $_SESSION['user']['role'] !== 'admin') {
     header("Location: /pages/sign-in.php");
     exit;
   }

@@ -11,11 +11,11 @@ class AuthController {
     public function login($username, $password) {
         if (empty($username) || empty($password)) {
             $_SESSION['error_message'] = "Username dan password harus diisi.";
-            header("Location: ../pages/sign-in.php");
+            header("Location: http://uas.test/pages/sign-in.php");
             exit();
         }
 
-        $stmt = $this->conn->prepare("SELECT `nama`, `password`, `role` FROM user WHERE `nama` = ?");
+        $stmt = $this->conn->prepare("SELECT `id`, `nama`, `password`, `role` FROM user WHERE `nama` = ?");
         if (!$stmt) {
             die("Prepare failed: " . $this->conn->error);
         }
@@ -27,8 +27,11 @@ class AuthController {
         $stmt->close();
 
         if ($user && $password === $user['password']) {
-            $_SESSION['username'] = $user['nama'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['user'] = [
+                "id" => $user["id"],
+                "nama" => $user["nama"],
+                "role" => $user["role"],
+            ];
 
             if ($user['role'] === 'admin') {
                 header("Location: http://uas.test/pages/dashboard.php");
@@ -38,7 +41,7 @@ class AuthController {
             exit();
         } else {
             $_SESSION['error_message'] = "Username atau password salah.";
-            header("Location: ../pages/login.php");
+            header("Location: http://uas.test/pages/sign-in.php");
             exit();
         }
     }
@@ -46,7 +49,7 @@ class AuthController {
     public function signup($username, $password, $role = 'user') {
         if (empty($username) || empty($password)) {
             $_SESSION['error_message'] = "Username dan password harus diisi.";
-            header("Location: ../pages/sign-up.php");
+            header("Location: http://uas.test/pages/sign-up.php");
             exit();
         }
 
@@ -61,7 +64,7 @@ class AuthController {
 
         if ($stmt_check->num_rows > 0) {
             $_SESSION['error_message'] = "Username sudah ada. Silakan pilih username lain.";
-            header("Location: ../pages/sign-up.php");
+            header("Location: http://uas.test/pages/sign-up.php");
             exit();
         }
         $stmt_check->close();
@@ -75,10 +78,10 @@ class AuthController {
 
         if ($stmt_insert->execute()) {
             $_SESSION['success_message'] = "Registrasi berhasil! Silakan login.";
-            header("Location: ../pages/sign-in.php");
+            header("Location: http://uas.test/pages/sign-in.php");
         } else {
             $_SESSION['error_message'] = "Registrasi gagal: " . $stmt_insert->error;
-            header("Location: ../pages/sign-up.php");
+            header("Location: http://uas.test/pages/sign-up.php");
         }
         $stmt_insert->close();
         exit();
