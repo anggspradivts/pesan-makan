@@ -33,7 +33,7 @@ $minumanList = getMenu($conn, 'minuman');
         <a class="border border-slate-400 rounded-lg" href="pages/menu-detail.php?id=<?= $makanan['id'] ?>">
           <div class="h-[200px] w-[250px] flex flex-col">
             <div class="h-[80%] overflow-hidden">
-              <img src="../assets/images/mie_portrait.jpg" alt="" class="w-full h-full object-cover" />
+              <img src="../assets/images/<?= htmlspecialchars($makanan['kategori']) ?>/menu.jpg" alt="" class="w-full h-full object-cover" />
             </div>
             <div class="m-2">
               <p class=""><?= $makanan['nama'] ?></p>

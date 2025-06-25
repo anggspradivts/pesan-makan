@@ -5,11 +5,6 @@ session_start();
 // Add item to cart
 function addToCart($conn, $userId, $menuId, $quantity = 1)
 {
-    if (!$userId) {
-        header("Location: http://uas.test/pages/sign-in.php");
-        exit();
-    }
-
     $stmt = $conn->prepare("SELECT id, quantity FROM carts WHERE user_id = ? AND menu_id = ?");
     $stmt->bind_param("ii", $userId, $menuId);
     $stmt->execute();
@@ -34,16 +29,27 @@ function addToCart($conn, $userId, $menuId, $quantity = 1)
 }
 
 // Edit cart item quantity
-function updateCartQuantity($conn, $userId, $menuId, $quantity)
+function updateCartQuantity($conn, $userId, $menuId, $quantity, $operation_method)
 {
+    if ($operation_method === "increase") {
+        $quantity++; // add 1
+    } elseif ($operation_method === "decrease") {
+        $quantity--; // subtract 1
+    }
+
     if ($quantity > 0) {
         $stmt = $conn->prepare("UPDATE carts SET quantity = ? WHERE user_id = ? AND menu_id = ?");
         $stmt->bind_param("iii", $quantity, $userId, $menuId);
         $stmt->execute();
+        $stmt->close();
+        header("Location: http://uas.test/pages/cart.php");
     } else {
+        // If quantity becomes 0 or less, delete the cart item
         deleteCartItem($conn, $userId, $menuId);
+        header("Location: http://uas.test/pages/cart.php");
     }
 }
+
 
 // Delete specific cart item
 function deleteCartItem($conn, $userId, $menuId)

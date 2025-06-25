@@ -6,9 +6,10 @@ $menuId = $_POST['menu_id'];
 $userId = $_SESSION['user']['id'] ?? null;
 $quantity = $_POST['quantity'];
 
-if (!isset($userId)) {
-    header("Location: http://uas.test/pages/sign-in.php");
-    exit();
+
+$addCart = addToCart($conn, $userId, $menuId, $quantity);
+if ($addCart) {
+    header("Location: http://uas.test/pages/cart.php");
 } else {
-    $addCart = addToCart($conn, $userId, $menuId, $quantity);
+    header("Location: http://uas.test");
 }

@@ -1,4 +1,4 @@
-<div class="relative bg-cover bg-center h-[500px]" style="background-image: url('../assets/images/mie_portrait.jpg')">
+<div class="relative bg-cover bg-center h-[500px]" style="background-image: url('../assets/images/makanan/menu.jpg')">
   <!-- Backdrop Blur Overlay -->
   <div class="backdrop-blur-sm w-full h-full">
     <!-- Navbar -->

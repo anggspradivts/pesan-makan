@@ -1,4 +1,4 @@
-<nav class="flex justify-between items-center h-14 px-12 bg-black text-white">
+<nav class="flex fixed z-[99999] absolute top-0 left-0 w-full justify-between items-center h-14 px-12 bg-black text-white">
     <div class="text-lg font-semibold">
         <a href="/">PesanMakan</a>
     </div>
