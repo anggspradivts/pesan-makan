@@ -69,3 +69,54 @@ function getOrderDetails(mysqli $conn, int $orderId): array
 
     return $items;
 }
+
+function getAdminOrders(mysqli $conn)
+{
+    $user = $_SESSION["user"];
+    if (isset($user) && $user["role"] === "admin") {
+        $stmt = $conn->prepare("
+        SELECT * 
+        FROM pesanan
+        ORDER BY tanggal_pesan
+    ");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $orders = [];
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+
+        $stmt->close();
+        return $orders;
+    } else {
+        $_SESSION['error_message'] = "Anda bukan admin";
+        header("Location: http://uas.test");
+    }
+}
+
+function editAdminOrders(mysqli $conn, string $newStatus, int $orderId)
+{
+    $user = $_SESSION["user"];
+    if (!$user || $user["role"] !== "admin") {
+        $_SESSION['error_message'] = "Anda bukan admin";
+        header("Location: http://uas.test");
+        exit;
+    }
+
+    $stmt = $conn->prepare("UPDATE pesanan SET status_pesanan = ? WHERE id = ?");
+    if (!$stmt) {
+        $_SESSION['error_message'] = "Gagal mempersiapkan query: " . $conn->error;
+        return false;
+    }
+
+    $stmt->bind_param("si", $newStatus, $orderId);
+
+    if ($stmt->execute()) {
+        $stmt->close();
+        return true;
+    } else {
+        $_SESSION['error_message'] = "Gagal memperbarui status pesanan: " . $stmt->error;
+        $stmt->close();
+        return false;
+    }
+}

@@ -26,7 +26,7 @@ $minumanList = getMenu($conn, 'minuman');
           <!-- Template Kartu Menu -->
           <div class="food-card flex flex-col h-[320px] bg-white rounded-lg border border-slate-300 hover:shadow overflow-hidden transition">
             <div class="img-container w-full h-1/2">
-              <img src="/assets/images/mie_portrait.jpg" alt="<?php echo htmlspecialchars($makanan['nama']); ?>" class="object-cover w-full h-full">
+              <img src="/assets/images/<?= htmlspecialchars($makanan['kategori']) ?>/menu.jpg" alt="<?php echo htmlspecialchars($makanan['nama']); ?>" class="object-cover w-full h-full">
             </div>
             <div class="p-3 flex flex-col flex-grow">
               <div class="flex-grow">
@@ -58,7 +58,7 @@ $minumanList = getMenu($conn, 'minuman');
           <!-- Template Kartu Menu -->
           <div class="food-card flex flex-col h-[320px] bg-white rounded-lg border border-slate-300 hover:shadow overflow-hidden transition">
             <div class="img-container w-full h-1/2 overflow-hidden">
-              <img src="/assets/images/mie_portrait.jpg" alt="<?php echo htmlspecialchars($minuman['nama']); ?>" class="object-cover w-full h-full">
+              <img src="/assets/images/<?= htmlspecialchars($minuman['kategori']) ?>/menu.jpg" alt="<?php echo htmlspecialchars($minuman['nama']); ?>" class="object-cover w-full h-full">
             </div>
             <div class="p-3 flex flex-col flex-grow">
               <div class="flex-grow">
