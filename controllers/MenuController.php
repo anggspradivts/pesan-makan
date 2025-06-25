@@ -11,7 +11,7 @@ function getMenu(mysqli $conn, string $kategori): array {
     return $data;
 }
 
-function getMenuDetail(mysqli $conn, int $idMenu): ?array {
+function getMenuDetail(mysqli $conn, string $idMenu): ?array {
     $sql = "SELECT * FROM menu WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idMenu);
