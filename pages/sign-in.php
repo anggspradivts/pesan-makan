@@ -6,6 +6,7 @@
 require '../components/head.php'; 
 if (isset($_SESSION['user']) && $_SESSION['user']['nama']) {
   header("Location: http://uas.test/pages/profile.php");
+  exit();
 };
 ?>
 

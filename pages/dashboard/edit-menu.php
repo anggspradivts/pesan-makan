@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/../../controllers/MenuController.php';
+require_once __DIR__ . '/../../database.php';
 
 // get menu
-$menuController = new MenuController($conn);
 $menuId = $_GET['id'];
-$menu = $menuController->getMenuDetail($menuId);
+$menu = getMenuDetail($conn, $menuId);
 ?>
 
 <main class="flex-1 p-8">

@@ -13,6 +13,5 @@
   $hargaMenu = $_POST['harga-menu'];
   $kategoriMenu = $_POST['kategori-menu'];
   $deskripsiMenu = $_POST['deskripsi-menu'];
-  $menu = new MenuController($conn);
-  $menu->addMenu($namaMenu, $deskripsiMenu, $hargaMenu, $kategoriMenu);
+  addMenu($conn, $namaMenu, $deskripsiMenu, $hargaMenu, $kategoriMenu);
 ?>

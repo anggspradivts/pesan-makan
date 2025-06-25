@@ -18,5 +18,5 @@ $kategori = $_POST['kategori'];
 if (!$id) {
   $_SESSION["error_message"] = "Menu tidak ditemukan";
 }
-$menu = new MenuController($conn);
-$menu->editMenu($nama, $deskripsi, $harga, $kategori, $id);
+
+editMenu($conn, $nama, $deskripsi, $harga, $kategori, $id);

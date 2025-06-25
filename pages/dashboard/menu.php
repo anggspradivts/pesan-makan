@@ -1,10 +1,9 @@
 <?php
 require_once __DIR__ . '/../../controllers/MenuController.php';
+require_once __DIR__ . '/../../database.php';
 
-$menuController = new MenuController($conn);
-
-$makananList = $menuController->getMenu('makanan');
-$minumanList = $menuController->getMenu('minuman');
+$makananList = getMenu($conn, 'makanan');
+$minumanList = getMenu($conn, 'minuman');
 ?>
 
 <body>

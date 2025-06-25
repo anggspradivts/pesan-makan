@@ -5,13 +5,12 @@ require_once __DIR__ . "/../database.php";
 
 $menuId = $_GET['id'] ?? null;
 
-$menu = new MenuController($conn);
 
 if (!$menuId) {
   die("Menu ID not provided.");
 }
 
-$menuDetail = $menu->getMenuDetail($menuId);
+$menuDetail = getMenuDetail($conn, $menuId);
 
 if (!$menuDetail) {
   die("Menu not found.");
@@ -24,6 +23,14 @@ if (!$menuDetail) {
 
 <body>
   <?php require "../components/navbar.php"; ?>
+
+  <!-- Success Message -->
+  <?php if (isset($_SESSION['success_message'])): ?>
+    <div class="mb-6 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded absolute top-0 left-0 z-[9999]">
+      <?= htmlspecialchars($_SESSION['success_message']) ?>
+    </div>
+    <?php unset($_SESSION['success_message']); ?>
+  <?php endif; ?>
 
   <!-- Left image panel -->
   <div class="h-[400px] lg:absolute lg:h-screen lg:w-[500px] bg-red-100 overflow-hidden">
@@ -46,13 +53,11 @@ if (!$menuDetail) {
       <button type="button" onclick="increaseQty()" class="fa-solid fa-plus p-3 rounded border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition"></button>
       <input type="hidden" name="quantity" id="quantityInput" value="1">
       <input type="hidden" name="menu_id" value="<?= $menuDetail['id'] ?>">
-      <input type="hidden" name="user_id" value="<?= $menuDetail['id'] ?>">
     </form>
   </div>
 </body>
 <script>
   let quantity = 1;
-
 
   function updateDisplay() {
     document.getElementById("quantity").textContent = quantity;

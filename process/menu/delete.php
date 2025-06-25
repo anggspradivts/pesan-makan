@@ -12,8 +12,7 @@ if (!$_SESSION['user'] || $_SESSION['user']['role'] !== 'admin') {
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
   $idMenu = (int) $_GET['id'];
   echo $idMenu;
-  $menu = new MenuController($conn);
-  $menu->deleteMenu($idMenu);
+  deleteMenu($conn, $idMenu);
 } else {
   header("Location: ../dashboard.php?page=menu&error=invalid_id");
   exit;

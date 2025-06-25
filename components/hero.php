@@ -13,6 +13,7 @@
           ? '<a href="http://uas.test/pages/dashboard.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500" href="http://example.com/profile">' . htmlspecialchars($_SESSION['user']['nama']) . '</a>'
           : '<a href="http://uas.test/pages/sign-in.php" class="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-500">Login</a>';
         ?>
+        <a href="../pages/cart.php" class="fa-solid fa-cart-shopping"></a>
       </div>
     </nav>
 
